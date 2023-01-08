@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <div class="card">
+        <h1>{{ todo.title }}</h1>
+        <p>{{ todo.body }}</p>
+        <em>{{ todo.created }}</em>
+    </div>
+{% endblock %}

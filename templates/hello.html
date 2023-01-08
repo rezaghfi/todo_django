@@ -1,16 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>hello</title>
-</head>
-<body>
-{# comment #}
-{{ age }}
-{% if name == 'reza' %}
-    <h3>hello {{ name | upper }}</h3>
-{% endif %}
+{% extends 'base.html' %}
 
-</form>
-</body>
-</html>
+{% block main %}
+    <h1>این صفحه خوش آمدگویی سایت ما است</h1>
+    <h3>اسم شما {{ name }}</h3>
+    <h3>سن شما نیز {{ age }}سال است</h3>
+    {% if name == 'reza' %}
+        <h1>شما کاربر نویسنده هستید</h1>
+        {% for i in range %}
+            <p>سلام {{ name }}</p>
+        {% endfor %}
+    {% elif name == 'admin' %}
+        <h1>شما کاربر مدیرکل هستید</h1>
+        {% for i in range %}
+            <p>سلام {{ name }}</p>
+        {% endfor %}
+    {% else %}
+        <h1>شما کاربر مجاز نیستید</h1>
+        <p>خداحافظ {{ name }}</p>
+    {% endif %}
+
+{% endblock %}
