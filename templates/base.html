@@ -19,16 +19,20 @@
             font-family: Nazanin;
             text-decoration: none;
         }
-        .card, .card>a{
+        .card, .card>a, detail{
             background-color: #9af8f8;
             padding: 5px;
             color: black;
             text-decoration: none;
         }
+        .delete{
+            color: red;
+        }
     </style>
 </head>
 <body>
     {% include 'header.html' %}
+    {% include 'messages.html' %}
     {% block main %}{% endblock %}
     {% include 'footer.html' %}
 </body>

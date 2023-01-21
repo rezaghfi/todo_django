@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 
 {% block main %}
-    <div class="card">
+    <div class="detail">
         <h1>{{ todo.title }}</h1>
         <p>{{ todo.body }}</p>
         <em>{{ todo.created }}</em>
+        <br>
+        <a class="delete" href="{% url 'delete' todo.id %}">حذف کن</a>
     </div>
 {% endblock %}
