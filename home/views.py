@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 # Create your views here.
+from .forms import TodoCreateForm
 from .models import Todo
 
 
@@ -24,3 +25,16 @@ def delete(request, todo_id):
   Todo.objects.get(id=todo_id).delete()
   messages.success(request, 'کار با موفقیت حذف شد')
   return redirect('home')
+
+def create(request):
+  if (request.method == 'POST'):
+    form = TodoCreateForm(request.POST)
+    if form.is_valid():
+      cd = form.cleaned_data
+      Todo.objects.create(title=cd['title'], body=cd['body'], created=cd['created'])
+      messages.success(request, 'کار جدید با موفقیت ایجاد شذ')
+      return redirect('home')
+  else:
+    form = TodoCreateForm()
+
+  return render(request, 'create.html', {'form':form})
