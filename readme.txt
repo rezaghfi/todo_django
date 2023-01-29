@@ -3,6 +3,11 @@ class TodoUpdateForm(forms.ModelForm):
   class Meta:
     model = Todo
     fields = ('title', 'body', 'created')
+    labels={
+      'title':'',
+      'body':'',
+      'created':''
+    }
 
 -------------------- update.html
 {% extends 'base.html' %}

@@ -7,5 +7,6 @@
         <em>{{ todo.created }}</em>
         <br>
         <a class="delete" href="{% url 'delete' todo.id %}">حذف کن</a>
+        <a class="update" href="{% url 'update' todo.id %}">بروزرسانی کن</a>
     </div>
 {% endblock %}
