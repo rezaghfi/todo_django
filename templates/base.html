@@ -2,36 +2,40 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{% block title %}{% endblock %}</title>
     <style>
 
-        body{
+        body {
             direction: rtl;
             font-family: "B Titr";
             font-size: large;
         }
-        header, footer, header>a{
+
+        header, footer, header > a {
             background-color: #4f4c4c;
-            color:white;
+            color: white;
             padding: 20px;
             text-align: center;
             font-family: "B Titr";
             text-decoration: none;
         }
-        .card, .card>a, detail{
+
+        .card, .card > a, detail {
             background-color: #9af8f8;
             padding: 5px;
-            color: black;
             text-decoration: none;
         }
-        .delete{
+
+        .delete {
             padding: 10px;
             text-decoration: none;
             color: #c52323;
         }
-        .update{
+
+        .update {
             padding: 10px;
             text-decoration: none;
             color: #34da34;
@@ -39,9 +43,11 @@
     </style>
 </head>
 <body>
-    {% include 'header.html' %}
-    {% include 'messages.html' %}
+{% include 'header.html' %}
+{% include 'messages.html' %}
+<div class="card">
     {% block main %}{% endblock %}
-    {% include 'footer.html' %}
+</div>
+{% include 'footer.html' %}
 </body>
 </html>
