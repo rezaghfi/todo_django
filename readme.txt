@@ -1,36 +1,45 @@
---------------------- forms.py
-class TodoUpdateForm(forms.ModelForm):
-  class Meta:
-    model = Todo
-    fields = ('title', 'body', 'created')
-    labels={
-      'title':'',
-      'body':'',
-      'created':''
-    }
+def user_register(request):
+  if request.method == 'POST':
+    form = UserRegistrationForm(request.POST)
+    if form.is_valid():
+      cd = form.cleaned_data
+      user = User.objects.create_user(username=cd['username'], email=cd['email'], password=cd['password'])
+      user.first_name = cd['firstName']
+      user.last_name = cd['lastName']
+      user.save()
+      messages.success(request, 'کاربر با موفقیت وارد شد')
+      return redirect('home')
+  else:
+    form = UserRegistrationForm()
+  return render(request, 'register.html', {'form': form})
 
--------------------- update.html
-{% extends 'base.html' %}
+----------------------------------------
+def user_login(request):
+  if request.method == 'POST':
+    form = UserLoginForm(request.POST)
+    if form.is_valid():
+      cd = form.cleaned_data
+      user = authenticate(request, username=cd['username'], password=['password'])
+      if user is not None:
+        login(request, user)
+        messages.success(request, 'کاربر با موفقیت وارد شد')
+        return redirect('home')
+      else:
+        messages.error(request, 'کاربری یا رمز اشتباه است')
+  else:
+    form = UserLoginForm()
+  return render(request, 'login.html', {'form': form})
 
-{% block main %}
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="بروزرسانی شد">
-    </form>
-{% endblock %}
 
----------------------- views.py
+------------------------------
+class UserRegistrationForm(forms.Form):
+  username = forms.CharField()
+  firstName = forms.CharField()
+  lastName = forms.CharField()
+  email = forms.CharField()
+  password = forms.CharField()
 
 
-def update(request, todo_id):
-    todo = Todo.objects.get(id=todo_id)
-    if request.method == 'POST':
-        form = TodoUpdateForm(request.POST, instance=todo)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'این کار با موفقیت بروزرسانی شد')
-            return redirect('detail', todo_id)
-    else:
-        form = TodoUpdateForm(instance=todo)
-    return render(request, 'update.html', {'form': form})
+class UserLoginForm(forms.Form):
+  username = forms.CharField()
+  password = forms.CharField()
