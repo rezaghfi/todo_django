@@ -40,7 +40,7 @@ def create(request):
       return redirect('home')
   else:
     form = TodoCreateForm()
-    return render(request, 'create.html', {'form': form})
+  return render(request, 'create.html', {'form': form})
 
 
 def update(request, todo_id):

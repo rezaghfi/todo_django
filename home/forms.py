@@ -3,7 +3,7 @@ from home.models import Todo
 
 
 class TodoCreateForm(forms.Form):
-  title = forms.CharField(max_length=10, label='عنوان کار')
+  title = forms.CharField(max_length=10, label='عنوان کار', min_length=2)
   body = forms.CharField(label='محتوای کار')
   created = forms.DateTimeField(label='تاریخ ایجاد')
 
