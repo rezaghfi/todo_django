@@ -1,45 +1,44 @@
-def user_register(request):
-  if request.method == 'POST':
-    form = UserRegistrationForm(request.POST)
-    if form.is_valid():
-      cd = form.cleaned_data
-      user = User.objects.create_user(username=cd['username'], email=cd['email'], password=cd['password'])
-      user.first_name = cd['firstName']
-      user.last_name = cd['lastName']
-      user.save()
-      messages.success(request, 'کاربر با موفقیت وارد شد')
-      return redirect('home')
-  else:
-    form = UserRegistrationForm()
-  return render(request, 'register.html', {'form': form})
-
-----------------------------------------
 def user_login(request):
   if request.method == 'POST':
     form = UserLoginForm(request.POST)
     if form.is_valid():
       cd = form.cleaned_data
-      user = authenticate(request, username=cd['username'], password=['password'])
+      user = authenticate(request, username=cd['username'], password=cd['password'])
       if user is not None:
         login(request, user)
-        messages.success(request, 'کاربر با موفقیت وارد شد')
-        return redirect('home')
+        txt = 'خوش آمدید' + user.first_name
+        messages.success(request, txt)
+        return redirect('user')
       else:
-        messages.error(request, 'کاربری یا رمز اشتباه است')
+        messages.error(request, 'نام کاربری یا رمز عبور اشتباه است')
   else:
     form = UserLoginForm()
-  return render(request, 'login.html', {'form': form})
+  return render(request, 'login.html', {'form':form})
+
+def user_logout(request):
+  logout(request)
+  messages.success(request, 'خارج شدید')
+  return redirect('home')
+
+def user(request):
+  return render(request, 'user.html')
 
 
 ------------------------------
-class UserRegistrationForm(forms.Form):
-  username = forms.CharField()
-  firstName = forms.CharField()
-  lastName = forms.CharField()
-  email = forms.CharField()
-  password = forms.CharField()
-
-
 class UserLoginForm(forms.Form):
-  username = forms.CharField()
-  password = forms.CharField()
+  username = forms.CharField(label='نام کاربری')
+  password = forms.CharField(label='رمزعبور', widget=forms.PasswordInput())
+
+  ----------------------------
+
+{% extends 'base.html' %}
+
+{% block main %}
+    <h1>صفحه کاربری</h1>
+    <p>{{ request.user.first_name }}</p>
+    {% if request.user.is_authenticated %}
+        <a href="{% url 'logout' %}">خروج</a>
+    {% else %}
+        <h2>ابتدا وارد شوید</h2>
+    {% endif %}
+{% endblock %}
