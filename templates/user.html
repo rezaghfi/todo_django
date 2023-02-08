@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    {% if request.user.is_authenticated %}
+        <h2> {{ request.user.first_name }} {{ request.user.last_name }}  خوش آمدید </h2>
+    {% else %}
+        <h2>ابتدا وارد کاربری شوید</h2>
+    {% endif %}
+{% endblock %}
