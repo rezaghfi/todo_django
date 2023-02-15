@@ -7,7 +7,6 @@ from accounts.forms import UserRegisterForm, UserLoginForm
 
 
 def user_register(request):
-  request.user.i
   if request.method == "POST":
     form = UserRegisterForm(request.POST)
     if form.is_valid():
